@@ -81,7 +81,6 @@ const showdata=()=> {
   so('');
   console.log(cq1);
   console.log(cq);
-  console.log('hello');
 };
 
 
