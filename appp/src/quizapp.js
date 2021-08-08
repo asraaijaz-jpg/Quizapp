@@ -10,6 +10,8 @@ import Modal from 'react-bootstrap/Modal';
 import { RadioGroup, Radio } from 'react-radio-group';
 import { Table } from 'react-bootstrap';
 import Form1 from './forrm';
+import data from './json';
+import dataa from './json';
 
 
 function Quizapp()
@@ -32,7 +34,7 @@ function Quizapp()
   const[cq,sq]=useState('Add Question');
   const[cq1,sq1]=useState([]);
 
-  const[cc,sc]=useState('Add Points');
+  const[cc,sc]=useState('Add Points');  
   const[cc1,sc1]=useState([]);
 
   const[ch,sh]=useState('Add Type');
@@ -40,6 +42,11 @@ function Quizapp()
 
   const[co,so]=useState(0);
   const[co1,so1]=useState([]);
+
+  const[counter,setcounter]=useState(0);
+  const[json1,setjson]=useState([dataa]);
+
+  console.log(dataa);
 
   function question(e)
   {
@@ -53,13 +60,10 @@ function Quizapp()
 {
 sh(e.target.value);
 }
-function optionvalue()
-{
-  so(co+1);
-}
 
 const showdata=()=> {
 
+setcounter(counter+1);
   sq1((olddata)=>{    
     return[...olddata,cq];
   });
@@ -69,73 +73,52 @@ const showdata=()=> {
     return[...olddata1,cc];
   });
   sc('');
-
   sh1((olddata2)=>{    
     return[...olddata2,ch];
   });
   sh('');
 
-  so1((olddata3)=>{    
+ so1((olddata3)=>{    
     return[...olddata3,co];
   });
-  so('');
-  console.log(cq1);
-  console.log(cq);
+so(0);
 };
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+const arraydata=[cq1 , co1 , ch1, cc1];
+
 
   return(<div className='container' style={{backgroundColor:'#B1C5E7 '}}>
 
 <Form1/>
-<button onClick={showdata}>chec</button>
-<div className="text-center"><Button className="btn btn-primary" onClick={handleShow} >Add Questions</Button></div> 
-<h3>Question Format</h3>
-
-  <form>
- <center> <table class="table table-hover">  <thead>
-    <tr>
-      <th scope="col">Text</th>
-      <th scope="col">Choices</th>
-      <th scope="col">Type</th>
-      <th scope="col">Points</th>
-    </tr>
-  </thead>
-  <tbody>
-
-{co1.map((traverse,index)=>{
-return(<tr>
-
-{cq1.map((data , index)=>{  return (
-    <td>{data}</td>
-  );
+<div className="text-center"><Button className="btn btn-primary" onClick={handleShow} >Add Questions</Button></div> <br></br>
+<div className='row'>
+  <div className='col-4'>
+    <div className='p-5 m-5'>
+    <i><h1>Questions</h1>
+    <h1>Options</h1>
+    <h1>Choices</h1>
+    <h1>Points</h1></i>
+      </div>
+  </div>
+  <div className='col-8'>
+  {arraydata.map((data,index)=>{
+return(
+  <div className='text-center'>
+  <h5 className='col' style={{margin:'10x'}}>{data[0]}</h5>
+  <h5 className='col' style={{margin:'10x'}}>{data[1]}</h5>
+  <h5 className='col' style={{margin:'10x'}}>{data[2]}</h5>
+  <h5 className='col' style={{margin:'10x'}}>{data[3]}</h5>
+  </div>
+)
 })}
-{co1.map((data1 , index)=>{
-  return (
-    <td>{data1}</td>
-  );
-})}  
-{ch1.map((data2 , index)=>{
-  return (
-    <td>{data2}</td>
-  );
-})}   
-{cc1.map((data3 , index)=>{
-  return (
-    <td>{data3}</td>
-  );
-})} 
+  </div>
 
-</tr>);
+</div>
 
-})} 
 
-</tbody>
-</table>
- </center>
-</form>
 <div className="d-flex flex-row-reverse m-3">
       </div>
       <Modal show={show} onHide={handleClose}>
@@ -143,7 +126,7 @@ return(<tr>
           <h1>Question</h1>
         </Modal.Header>
         <Modal.Body>
-          <Form.Control as="textarea" rows={3} placeholder="Add Question" onChange={question} />
+          <Form.Control as="textarea" rows={3} placeholder="Add Question" onChange={question}/>
           <div className="d-flex justify-content-between">
             <div className="col-md-6">
               <h5>Question Type</h5>
@@ -188,10 +171,10 @@ return(<tr>
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={optionvalue}>Add</Button>
+          <Button variant="secondary" onClick={()=>so(co+1)}>Add</Button>
           <Button variant="secondary" onClick={handleHide}>Close</Button>
              </Modal.Footer>
-      </Modal>
+                   </Modal>
 
 </div>)    
 
